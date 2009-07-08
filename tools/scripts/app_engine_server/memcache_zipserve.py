@@ -216,8 +216,7 @@ class MemcachedZipHandler(webapp.RequestHandler):
     # if this is a directory or the domain itself, redirect to /index.html
     if not name or (name[len(name) - 1:] == '/'):
       uri = ''.join(['/', name, 'index.html'])
-      logging.info('--->PREPROCESSING REDIRECT [%s] to [%s] with 
-        langName [%s]', name, uri, langName)
+      logging.info('--->PREPROCESSING REDIRECT [%s] to [%s] with langName [%s]', name, uri, langName)
       # expireDate = time.mktime(localtime()) + 60 * 60 * 24 * 365 * 10
       # expireGMT = strftime("%a, %d %b %Y %H:%M:%S", localtime(expireDate)) 
       # content_type, encoding = mimetypes.guess_type(name)
