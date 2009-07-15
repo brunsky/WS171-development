@@ -241,7 +241,7 @@ class MemcachedZipHandler(webapp.RequestHandler):
     Returns:
       The lang-specific URL
     """
-    builtIntlLangUri = ''.join([intlString, langName, '/', name])
+    builtIntlLangUri = ''.join([intlString, langName, '/', name, '?', self.request.query_string])
     uri = ''.join(['/', builtIntlLangUri])
     logging.info('-->>REDIRECTING %s to  %s', name, uri)
     self.redirect(uri, False)
