@@ -325,6 +325,14 @@ class MemcachedZipHandler(webapp.RequestHandler):
       self.response.headers['Content-Type'] = content_type
       self.SetCachingHeaders(mustRevalidate)
       self.response.out.write(resp_data)
+    elif (name == 'favicon.ico'):
+      self.response.headers['Content-Type'] = 'image/x-icon'
+      self.SetCachingHeaders(mustRevalidate)
+      self.response.out.write(resp_data)
+    elif name.endswith('.psd'):
+      self.response.headers['Content-Type'] = 'application/octet-stream'
+      self.SetCachingHeaders(mustRevalidate)
+      self.response.out.write(resp_data)
     return True
 
   def GetFromStore(self, file_path):
