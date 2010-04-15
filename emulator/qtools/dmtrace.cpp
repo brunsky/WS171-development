@@ -163,7 +163,7 @@ void DmTrace::parseAndAddFunction(int functionId, const char *name)
     //   sig = "()I"
 
     // Find the first parenthesis, the start of the signature.
-    char *paren = strchr(name, '(');
+    char *paren = strchr(const_cast<char *>(name), '(');
 
     // If not found, then add the original name.
     if (paren == NULL) {
@@ -180,7 +180,7 @@ void DmTrace::parseAndAddFunction(int functionId, const char *name)
     *paren = 0;
 
     // Search for the last period, the start of the method name
-    char *dot = strrchr(name, '.');
+    char *dot = strrchr(const_cast<char *>(name), '.');
 
     // If not found, then add the original name.
     if (dot == NULL || dot == name) {

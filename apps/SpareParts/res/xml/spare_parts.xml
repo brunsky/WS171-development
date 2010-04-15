@@ -86,31 +86,6 @@
                 android:entryValues="@array/entryvalues_font_size"
                 android:dialogTitle="@string/dialog_title_font_size" />
         
-        <ListPreference
-                android:key="end_button"
-                android:title="@string/title_end_button"
-                android:summary="@string/summary_end_button"
-                android:entries="@array/entries_end_button"
-                android:entryValues="@array/entryvalues_end_button"
-                android:dialogTitle="@string/dialog_title_end_button" />
-        
-        <CheckBoxPreference 
-            android:key="haptic_feedback" 
-            android:title="@string/title_haptic_feedback" 
-            android:summaryOn="@string/summary_on_haptic_feedback"
-            android:summaryOff="@string/summary_off_haptic_feedback"/>
-        
-    </PreferenceCategory>
-            
-    <PreferenceCategory
-        android:title="@string/applications_title">
-                
-        <CheckBoxPreference 
-            android:key="maps_compass" 
-            android:title="@string/title_maps_compass" 
-            android:summaryOn="@string/summary_on_maps_compass"
-            android:summaryOff="@string/summary_off_maps_compass"/>
-        
     </PreferenceCategory>
         
 </PreferenceScreen>

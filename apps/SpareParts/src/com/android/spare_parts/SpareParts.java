@@ -91,7 +91,6 @@ public class SpareParts extends PreferenceActivity
                 ResolveInfo resolveInfo = list.get(i);
                 if ((resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM)
                         != 0) {
-                    
                     // Replace the intent with this specific activity
                     preference.setIntent(new Intent().setClassName(
                             resolveInfo.activityInfo.packageName,
@@ -121,12 +120,12 @@ public class SpareParts extends PreferenceActivity
         mTransitionAnimationsPref.setOnPreferenceChangeListener(this);
         mFancyImeAnimationsPref = (CheckBoxPreference) prefSet.findPreference(FANCY_IME_ANIMATIONS_PREF);
         mFancyRotationAnimationsPref = (CheckBoxPreference) prefSet.findPreference(FANCY_ROTATION_ANIMATIONS_PREF);
-        mHapticFeedbackPref = (CheckBoxPreference) prefSet.findPreference(HAPTIC_FEEDBACK_PREF);
+        //mHapticFeedbackPref = (CheckBoxPreference) prefSet.findPreference(HAPTIC_FEEDBACK_PREF);  //GILL MARKED
         mFontSizePref = (ListPreference) prefSet.findPreference(FONT_SIZE_PREF);
         mFontSizePref.setOnPreferenceChangeListener(this);
-        mEndButtonPref = (ListPreference) prefSet.findPreference(END_BUTTON_PREF);
-        mEndButtonPref.setOnPreferenceChangeListener(this);
-        mShowMapsCompassPref = (CheckBoxPreference) prefSet.findPreference(MAPS_COMPASS_PREF);
+        //mEndButtonPref = (ListPreference) prefSet.findPreference(END_BUTTON_PREF); //GILL MARKED
+        //mEndButtonPref.setOnPreferenceChangeListener(this);  //GILL MARKED
+        //mShowMapsCompassPref = (CheckBoxPreference) prefSet.findPreference(MAPS_COMPASS_PREF);  //GILL MARKED
         
         mWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
         
@@ -149,12 +148,13 @@ public class SpareParts extends PreferenceActivity
             mFancyRotationAnimationsPref.setChecked(Settings.System.getInt(
                     getContentResolver(), 
                     "fancy_rotation_anim", 0) != 0);
-            mHapticFeedbackPref.setChecked(Settings.System.getInt(
-                    getContentResolver(), 
-                    Settings.System.HAPTIC_FEEDBACK_ENABLED, 0) != 0);
+            //GILL MARKED
+            //mHapticFeedbackPref.setChecked(Settings.System.getInt(
+            //        getContentResolver(), 
+            //        Settings.System.HAPTIC_FEEDBACK_ENABLED, 0) != 0);
             Context c = createPackageContext("com.google.android.apps.maps", 0);
-            mShowMapsCompassPref.setChecked(c.getSharedPreferences("extra-features", MODE_WORLD_READABLE)
-                .getBoolean("compass", false));
+            //mShowMapsCompassPref.setChecked(c.getSharedPreferences("extra-features", MODE_WORLD_READABLE)
+            //    .getBoolean("compass", false));
         } catch (NameNotFoundException e) {
             Log.w(TAG, "Failed reading maps compass");
             e.printStackTrace();
@@ -168,9 +168,9 @@ public class SpareParts extends PreferenceActivity
             writeAnimationPreference(1, objValue);
         } else if (preference == mFontSizePref) {
             writeFontSizePreference(objValue);
-        } else if (preference == mEndButtonPref) {
-            writeEndButtonPreference(objValue);
-        }
+        } //else if (preference == mEndButtonPref) {
+          //  writeEndButtonPreference(objValue);  //GILL MARKED
+        //}
 
         // always let the preference setting proceed.
         return true;
@@ -251,16 +251,25 @@ public class SpareParts extends PreferenceActivity
             Settings.System.putInt(getContentResolver(),
                     "fancy_rotation_anim",
                     mFancyRotationAnimationsPref.isChecked() ? 1 : 0);
-        } else if (HAPTIC_FEEDBACK_PREF.equals(key)) {
+        } //else if (HAPTIC_FEEDBACK_PREF.equals(key)) {
+          //  Settings.System.putInt(getContentResolver(),
+          //          Settings.System.HAPTIC_FEEDBACK_ENABLED,
+          //          mHapticFeedbackPref.isChecked() ? 1 : 0);
+          else if (HAPTIC_FEEDBACK_PREF.equals(key)) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.HAPTIC_FEEDBACK_ENABLED,
-                    mHapticFeedbackPref.isChecked() ? 1 : 0);
+                    false ? 1 : 0);
         } else if (MAPS_COMPASS_PREF.equals(key)) {
             try {
                 Context c = createPackageContext("com.google.android.apps.maps", 0);
+                //GILL MODIFY
+                //c.getSharedPreferences("extra-features", MODE_WORLD_WRITEABLE)
+                //    .edit()
+                //    .putBoolean("compass", mShowMapsCompassPref.isChecked())
+                //    .commit();
                 c.getSharedPreferences("extra-features", MODE_WORLD_WRITEABLE)
                     .edit()
-                    .putBoolean("compass", mShowMapsCompassPref.isChecked())
+                    .putBoolean("compass", false)
                     .commit();
             } catch (NameNotFoundException e) {
                 Log.w(TAG, "Failed setting maps compass");
@@ -275,7 +284,7 @@ public class SpareParts extends PreferenceActivity
         readAnimationPreference(0, mWindowAnimationsPref);
         readAnimationPreference(1, mTransitionAnimationsPref);
         readFontSizePreference(mFontSizePref);
-        readEndButtonPreference(mEndButtonPref);
+        //readEndButtonPreference(mEndButtonPref);  //GILL MARKED
         updateToggles();
     }
 }
